@@ -1,0 +1,12 @@
+# Private signing material
+*.p12
+*.jks
+*.keystore
+signing.json
+Open_Private*
+
+# Build output
+**/build/
+**/dist/
+*.idsig
+*-unsigned.apk

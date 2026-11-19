@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="match_parent" android:layout_height="wrap_content"
+ android:background="@drawable/confirmation_background">
+<LinearLayout
+ android:layout_width="match_parent" android:layout_height="wrap_content"
+ android:orientation="vertical" android:gravity="center_horizontal"
+ android:paddingLeft="28dp" android:paddingRight="28dp" android:paddingTop="26dp" android:paddingBottom="30dp"
+>
+ <FrameLayout android:layout_width="104dp" android:layout_height="104dp" android:background="@drawable/confirmation_circle">
+  <ImageView android:layout_width="48dp" android:layout_height="48dp" android:layout_gravity="center" android:src="@drawable/confirmation_gate" android:importantForAccessibility="no" />
+ </FrameLayout>
+ <TextView android:id="@+id/confirmation_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp"
+  android:text="Ворота открыты" android:textColor="#FFFFFF" android:textSize="32sp" android:fontFamily="sans-serif-medium" android:gravity="center" android:includeFontPadding="false" />
+ <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:orientation="horizontal" android:gravity="center_vertical">
+  <ImageView android:id="@+id/confirmation_status_icon" android:layout_width="23dp" android:layout_height="23dp" android:layout_marginRight="12dp" android:src="@drawable/confirmation_check" android:importantForAccessibility="no" />
+  <TextView android:id="@+id/confirmation_message" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Устройство подтвердило команду" android:textColor="#39C47E" android:textSize="23sp" android:fontFamily="sans-serif" android:gravity="center" android:includeFontPadding="false" />
+ </LinearLayout>
+</LinearLayout>
+ <ImageButton android:id="@+id/reset_binding" android:layout_width="48dp" android:layout_height="48dp"
+  android:layout_gravity="top|end" android:layout_marginTop="10dp" android:layout_marginEnd="10dp"
+  android:padding="12dp" android:background="@drawable/reset_button_background"
+  android:src="@drawable/reset_binding_icon" android:contentDescription="Сменить устройство"
+  android:clickable="true" android:focusable="true" />
+</FrameLayout>
