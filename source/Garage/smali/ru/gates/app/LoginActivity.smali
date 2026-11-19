@@ -1168,9 +1168,12 @@
     invoke-super {p0, p1}, Landroid/app/Activity;->onCreate(Landroid/os/Bundle;)V
 
     .line 55
-    new-instance p1, Landroid/widget/FrameLayout;
+    new-instance p1, Landroid/widget/LinearLayout;
 
-    invoke-direct {p1, p0}, Landroid/widget/FrameLayout;-><init>(Landroid/content/Context;)V
+    invoke-direct {p1, p0}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
+
+    const/4 v0, 0x1
+    invoke-virtual {p1, v0}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
     .line 56
     const-string v0, "#121212"
@@ -1179,7 +1182,7 @@
 
     move-result v1
 
-    invoke-virtual {p1, v1}, Landroid/widget/FrameLayout;->setBackgroundColor(I)V
+    invoke-virtual {p1, v1}, Landroid/widget/LinearLayout;->setBackgroundColor(I)V
 
     .line 58
     new-instance v1, Landroid/webkit/WebView;
@@ -1195,10 +1198,23 @@
 
     invoke-virtual {v1, v0}, Landroid/webkit/WebView;->setBackgroundColor(I)V
 
-    # OEM head-unit WebView rendering fallback
+    # Keep the existing software fallback for large head-unit/tablet layouts.
+    # Phones use the normal hardware-accelerated WebView composition.
+    invoke-virtual {p0}, Lru/gates/app/LoginActivity;->getResources()Landroid/content/res/Resources;
+    move-result-object v2
+    invoke-virtual {v2}, Landroid/content/res/Resources;->getConfiguration()Landroid/content/res/Configuration;
+    move-result-object v2
+    iget v2, v2, Landroid/content/res/Configuration;->smallestScreenWidthDp:I
+    const/16 v3, 0x258
+    if-ge v2, v3, :large_display
+    const/4 v2, 0x0
+    goto :layer_selected
+    :large_display
     const/4 v2, 0x1
+    :layer_selected
     const/4 v3, 0x0
     invoke-virtual {v1, v2, v3}, Landroid/webkit/WebView;->setLayerType(ILandroid/graphics/Paint;)V
+    invoke-virtual {v1, v3}, Landroid/webkit/WebView;->setInitialScale(I)V
 
     .line 61
     new-instance v0, Landroid/widget/TextView;
@@ -1222,9 +1238,14 @@
     const/4 v1, -0x1
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setTextColor(I)V
+    const/4 v2, 0x2
+    invoke-virtual {v0, v2}, Landroid/widget/TextView;->setMaxLines(I)V
+    sget-object v2, Landroid/text/TextUtils$TruncateAt;->END:Landroid/text/TextUtils$TruncateAt;
+    invoke-virtual {v0, v2}, Landroid/widget/TextView;->setEllipsize(Landroid/text/TextUtils$TruncateAt;)V
+
 
     .line 64
-    const/high16 v2, 0x41800000    # 16.0f
+    const/high16 v2, 0x41600000    # 14.0f
 
     invoke-virtual {v0, v2}, Landroid/widget/TextView;->setTextSize(F)V
 
@@ -1270,6 +1291,12 @@
 
     .line 72
     invoke-virtual {v2, v3}, Landroid/webkit/WebSettings;->setDomStorageEnabled(Z)V
+    invoke-virtual {v2, v3}, Landroid/webkit/WebSettings;->setUseWideViewPort(Z)V
+    const/4 v4, 0x0
+    invoke-virtual {v2, v4}, Landroid/webkit/WebSettings;->setLoadWithOverviewMode(Z)V
+    const/16 v5, 0x64
+    invoke-virtual {v2, v5}, Landroid/webkit/WebSettings;->setTextZoom(I)V
+
 
     .line 73
     const/4 v4, 0x0
@@ -1326,16 +1353,18 @@
     .line 153
     iget-object v2, p0, Lru/gates/app/LoginActivity;->web:Landroid/webkit/WebView;
 
-    new-instance v3, Landroid/widget/FrameLayout$LayoutParams;
+    new-instance v3, Landroid/widget/LinearLayout$LayoutParams;
 
     .line 154
-    invoke-direct {v3, v1, v1}, Landroid/widget/FrameLayout$LayoutParams;-><init>(II)V
+    const/4 v4, 0x0
+    const/high16 v5, 0x3f800000    # 1.0f
+    invoke-direct {v3, v1, v4, v5}, Landroid/widget/LinearLayout$LayoutParams;-><init>(IIF)V
 
     .line 153
-    invoke-virtual {p1, v2, v3}, Landroid/widget/FrameLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
+    invoke-virtual {p1, v2, v3}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
     .line 155
-    new-instance v2, Landroid/widget/FrameLayout$LayoutParams;
+    new-instance v2, Landroid/widget/LinearLayout$LayoutParams;
 
     .line 156
     nop
@@ -1343,15 +1372,13 @@
     .line 155
     const/4 v3, -0x2
 
-    invoke-direct {v2, v1, v3}, Landroid/widget/FrameLayout$LayoutParams;-><init>(II)V
+    invoke-direct {v2, v1, v3}, Landroid/widget/LinearLayout$LayoutParams;-><init>(II)V
 
     .line 157
-    const/16 v1, 0x50
-
-    iput v1, v2, Landroid/widget/FrameLayout$LayoutParams;->gravity:I
+    nop
 
     .line 158
-    invoke-virtual {p1, v0, v2}, Landroid/widget/FrameLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
+    invoke-virtual {p1, v0, v2}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
     .line 159
     invoke-virtual {p0, p1}, Lru/gates/app/LoginActivity;->setContentView(Landroid/view/View;)V

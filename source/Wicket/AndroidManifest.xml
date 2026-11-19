@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="34" android:compileSdkVersionCodename="14" package="ru.gates.publicapp.wicket" platformBuildVersionCode="34" platformBuildVersionName="14">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <application android:allowBackup="false" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:usesCleartextTraffic="false">
+        <activity android:excludeFromRecents="true" android:exported="true" android:launchMode="singleInstance" android:name="ru.gates.app.MainActivity" android:theme="@style/OverlayTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="false" android:name="ru.gates.app.LoginActivity" android:theme="@android:style/Theme.Material.NoActionBar"/>
+    </application>
+</manifest>

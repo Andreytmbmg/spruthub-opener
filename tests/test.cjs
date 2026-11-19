@@ -7,7 +7,7 @@ function setup(kind,full=false){
 }
 function request(c,serial='HUB_TEST_A',id=1){return{id,method:'characteristic.update',serial,params:{characteristic:{update:c}}};}
 const cases=[{aId:90,sId:13,cId:16,control:{value:{intValue:0}}},{aId:91,sId:77,cId:94,control:{value:{intValue:100}}},{aId:92,sId:21,cId:24,control:{value:{intValue:0}}},{aId:93,sId:17,cId:20,control:{value:{intValue:100}}},{aId:94,sId:100,cId:200,control:{value:{boolValue:true}}}];
-for(const kind of ['Lock','Garage','Swing']){
+for(const kind of ['Lock','Garage','Swing','Sliding','Wicket']){
  for(const full of [false,true])for(const cmd of cases){
   let{c,body,WS}=setup(kind,full),w=new WS(),q=request(cmd);w.send(JSON.stringify(q));assert(!c.__gateSetupReady);w.reply(999);assert.equal(body.children.length,0);w.reply(1);assert.equal(body.children.length,1);assert(!c.__gateSetupReady);
   const card=body.children[0].children[0];card.children[2].onclick();assert(c.__gateSetupReady);assert.equal(body.children.length,0);assert.deepEqual(JSON.parse(JSON.stringify(c.__gateSetupCommand)),cmd);assert.equal(c.__gateSetupSerial,'HUB_TEST_A');assert.equal(w.sends.length,1);
